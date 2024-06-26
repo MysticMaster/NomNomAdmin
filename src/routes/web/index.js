@@ -15,4 +15,14 @@ router.post('/create-category', upload.single("image"), homeController.postCreat
 
 router.post('/delete-category/:id', homeController.deleteCategory);
 
+router.post('/update-category/:id', upload.single("image"), homeController.updateCategory);
+
+router.get('/product', homeController.getProductPage);
+
+router.post('/create-product', upload.single("image"), homeController.postCreateProduct);
+
+router.post('/delete-product/:id', homeController.deleteProduct);
+
+router.post('/update-product/:id', upload.single("image"), homeController.updateProduct);
+
 export default router;

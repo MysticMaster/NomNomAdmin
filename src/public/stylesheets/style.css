@@ -1,15 +1,7 @@
-body {
-  background-color: #111827;
-}
-
-a {
-  color: #00B7FF;
-}
-
 .active-container{
-  background-color: #111827 ;
+  background-color: #111827 !important; ;
 }
 
 .active-item{
-  color: white;
+  color: white !important;
 }

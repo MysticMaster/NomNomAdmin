@@ -138,62 +138,62 @@ router.post("/category", upload.single("image"), async (req, res) => {
 });
 
 router.put("/category/:id", upload.single("image"), async (req, res) => {
-    try {
-        if (!req.body) {
-            return res.status(400).send({status: 400, data: null, message: "Null Request"});
-        }
-
-        const searchCategory = await Category.findOne({_id: req.params.id});
-
-        if (!searchCategory) {
-            return res.status(404).send({status: 404, data: null, message: "Category not found"});
-        }
-
-        let {name, imageName, status} = req.body;
-
-        if (req.file) {
-            try {
-                const deleteParams = {
-                    Bucket: bucketName,
-                    Key: imageName,
-                };
-
-                const delelteCommand = new DeleteObjectCommand(deleteParams);
-                await s3.send(delelteCommand);
-
-                const buffer = await sharp(req.file.buffer)
-                    .resize({height: 500, width: 500, fit: "cover"})
-                    .toBuffer();
-
-                imageName = randomImageName();
-
-                const params = {
-                    Bucket: bucketName,
-                    Key: imageName,
-                    Body: buffer,
-                    ContentType: req.file.mimetype,
-                };
-
-                const command = new PutObjectCommand(params);
-                await s3.send(command);
-            } catch (error) {
-                console.log("ERROR upload file: ", error);
-            }
-        }
-
-        const updateCategory = await Category.findByIdAndUpdate(
-            {_id: req.params.id},
-            {
-                name: name,
-                imageName: imageName,
-                status: true
-            },
-            {new: true});
-
-        res.status(200).send({status: 201, data: updateCategory, message: "Update Successful"});
-    } catch (error) {
-        res.status(500).send({status: 500, data: null, message: error.message});
-    }
+    // try {
+    //     if (!req.body) {
+    //         return res.status(400).send({status: 400, data: null, message: "Null Request"});
+    //     }
+    //
+    //     const searchCategory = await Category.findOne({_id: req.params.id});
+    //
+    //     if (!searchCategory) {
+    //         return res.status(404).send({status: 404, data: null, message: "Category not found"});
+    //     }
+    //
+    //     let {name, imageName, status} = req.body;
+    //
+    //     if (req.file) {
+    //         try {
+    //             const deleteParams = {
+    //                 Bucket: bucketName,
+    //                 Key: imageName,
+    //             };
+    //
+    //             const delelteCommand = new DeleteObjectCommand(deleteParams);
+    //             await s3.send(delelteCommand);
+    //
+    //             const buffer = await sharp(req.file.buffer)
+    //                 .resize({height: 500, width: 500, fit: "cover"})
+    //                 .toBuffer();
+    //
+    //             imageName = randomImageName();
+    //
+    //             const params = {
+    //                 Bucket: bucketName,
+    //                 Key: imageName,
+    //                 Body: buffer,
+    //                 ContentType: req.file.mimetype,
+    //             };
+    //
+    //             const command = new PutObjectCommand(params);
+    //             await s3.send(command);
+    //         } catch (error) {
+    //             console.log("ERROR upload file: ", error);
+    //         }
+    //     }
+    //
+    //     const updateCategory = await Category.findByIdAndUpdate(
+    //         {_id: req.params.id},
+    //         {
+    //             name: name,
+    //             imageName: imageName,
+    //             status: true
+    //         },
+    //         {new: true});
+    //
+    //     res.status(200).send({status: 201, data: updateCategory, message: "Update Successful"});
+    // } catch (error) {
+    //     res.status(500).send({status: 500, data: null, message: error.message});
+    // }
 });
 
 router.delete("/category/:id", async (req, res) => {
