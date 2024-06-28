@@ -1,0 +1,48 @@
+<div class="p-4 sm:ml-64">
+
+    <%- include('../components/modals/addCategoryModal') %>
+
+    <div class="relative mt-4 overflow-x-auto dark:bg-gray-800 shadow-md rounded-lg">
+        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+            <thead class="text-xs md:text-md text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-white">
+            <tr class="w-full grid grid-cols-4 gap-3 md:gap-16 px-2 py-2 md:px-5">
+                <th scope="col" class="py-3">
+                    Hình ảnh
+                </th>
+                <th scope="col" class="py-3">
+                    Tên danh mục
+                </th>
+                <th scope="col" class="py-3">
+                    Trạng thái
+                </th>
+                <th scope="col" class="py-3">
+                    Thao tác
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <% if(locals.categories.length > 0){ %>
+
+                <% categories.forEach( (item, index)  => { %>
+
+                    <%- include('../components/items/categoryRow', { item: item, index: index }) %>
+                    <%- include('../components/modals/deleteCategoryModal',{ item: item, index: index }) %>
+                    <%- include('../components/modals/updateCategoryModal',{ item: item, index: index }) %>
+                    <%- include('../components/modals/detailCategoryModal',{ item: item, index: index }) %>
+
+                <% }); %>
+            <% }else { %>
+                <tr class="w-full justify-center items-center bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <td class="text-base w-full text-center p-3 italic font-medium text-gray-900 dark:text-white">Không
+                        có danh mục nào
+                    </td>
+                </tr>
+            <% } %>
+            </tbody>
+        </table>
+        <% if(categories.length > 0){ %>
+            <%- include('../components/categoryPagination') %>
+        <% } %>
+    </div>
+</div>
+

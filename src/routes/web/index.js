@@ -1,5 +1,8 @@
 import express from 'express';
 import homeController from '../../controllers/homeController.js';
+import categoryController from '../../controllers/categoryController.js';
+import productController from '../../controllers/productController.js';
+
 import multer from "multer";
 
 const router = express.Router();
@@ -9,20 +12,20 @@ const upload = multer({storage: storage});
 
 router.get('/home', homeController.getHomePage);
 
-router.get('/category', homeController.getCategoryPage);
+router.get('/category', categoryController.getCategoryPage);
 
-router.post('/create-category', upload.single("image"), homeController.postCreateCategory);
+router.post('/create-category', upload.single("image"), categoryController.postCreateCategory);
 
-router.post('/delete-category/:id', homeController.deleteCategory);
+router.post('/delete-category/:id', categoryController.deleteCategory);
 
-router.post('/update-category/:id', upload.single("image"), homeController.updateCategory);
+router.post('/update-category/:id', upload.single("image"), categoryController.updateCategory);
 
-router.get('/product', homeController.getProductPage);
+router.get('/product', productController.getProductPage);
 
-router.post('/create-product', upload.single("image"), homeController.postCreateProduct);
+router.post('/create-product', upload.single("image"), productController.postCreateProduct);
 
-router.post('/delete-product/:id', homeController.deleteProduct);
+router.post('/delete-product/:id', productController.deleteProduct);
 
-router.post('/update-product/:id', upload.single("image"), homeController.updateProduct);
+router.post('/update-product/:id', upload.single("image"), productController.updateProduct);
 
 export default router;

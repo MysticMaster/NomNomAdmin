@@ -1,0 +1,53 @@
+<div class="p-4 sm:ml-64">
+
+    <%- include('../components/modals/addProductModal') %>
+
+    <%- include('../components/productTopBar') %>
+
+    <div class="relative overflow-x-auto dark:bg-gray-800 shadow-md rounded-lg">
+        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+            <thead class="text-xs md:text-md text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-white">
+            <tr class="w-full grid grid-cols-5 gap-3 px-2 py-2 md:px-5">
+                <th scope="col" class="py-3">
+                    Hình ảnh
+                </th>
+                <th scope="col" class="py-3">
+                    Tên sản phẩm
+                </th>
+                <th scope="col" class="py-3">
+                    Giá sản phẩm
+                </th>
+                <th scope="col" class="py-3">
+                    Trạng thái
+                </th>
+                <th scope="col" class="py-3">
+                    Thao tác
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <% if(locals.products.length > 0){ %>
+
+                <% products.forEach( (item, index)  => { %>
+
+                    <%- include('../components/items/productRow', { item: item, index: index }) %>
+                    <%- include('../components/modals/deleteProductModal',{ item: item, index: index }) %>
+                    <%- include('../components/modals/updateProductModal',{ item: item, index: index }) %>
+                    <%- include('../components/modals/detailProductModal',{ item: item, index: index }) %>
+
+                <% }); %>
+            <% }else { %>
+                <tr class="w-full justify-center items-center bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <td class="text-base w-full text-center p-3 italic font-medium text-gray-900 dark:text-white">Không
+                        có sản phẩm nào
+                    </td>
+                </tr>
+            <% } %>
+            </tbody>
+        </table>
+        <% if(products.length > 0){ %>
+            <%- include('../components/productPagination') %>
+        <% } %>
+    </div>
+</div>

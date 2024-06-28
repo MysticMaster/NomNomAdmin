@@ -1,11 +1,27 @@
 <!DOCTYPE html>
-<html>
-  <head>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-  </body>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet"/>
+</head>
+<body class="bg-gray-200 dark:bg-gray-900">
+<%- include('components/sidebar') %>
+<% switch (active) {
+case 'home': %>
+<%- include('pages/homePage') %>
+<% break;
+case 'category': %>
+<%- include('pages/categoryPage') %>
+<% break;
+case 'product': %>
+<%- include('pages/productPage') %>
+<% break;
+} %>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+</body>
 </html>

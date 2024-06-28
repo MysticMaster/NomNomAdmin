@@ -1,0 +1,33 @@
+<tr class="w-full grid grid-cols-5 gap-3 px-2 md:px-5 py-3 items-center bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+    <td data-modal-target="product-detail-modal-<%= index %>"
+        data-modal-toggle="product-detail-modal-<%= index %>">
+        <img src="<%= item.imageUrl %>"
+             class="w-16 rounded-lg md:w-32 max-w-[40px] max-h-[40px] md:max-w-[75px] md:max-h-[75px] object-cover object-center"
+             alt="Image Url">
+
+    </td>
+    <td class="font-semibold text-gray-900 dark:text-white text-xs md:text-base">
+        <% if (item.name.length > 8 && !item.name.includes(' ')) { %>
+            <%= item.name.substring(0, 8) + '...' %>
+        <% } else { %>
+            <%= item.name %>
+        <% } %>
+    </td>
+    <td class="font-semibold text-gray-900 dark:text-white text-xs md:text-base">
+        <%= item.price.toLocaleString('vi-VN', {style: 'currency', currency: 'VND'}) %>
+    </td>
+    <td class="font-semibold text-gray-900 dark:text-white text-xs md:text-base">
+        <%= item.status ? "Còn món" : "Hết món" %>
+    </td>
+    <td class="flex flex-col md:flex-row text-lg justify-start items-start">
+        <button data-modal-target="popup-modal-<%= index %>"
+                data-modal-toggle="popup-modal-<%= index %>"
+                class="font-medium text-red-600 dark:text-red-500 hover:underline">Xoá
+        </button>
+        <button data-modal-target="product-update-modal-<%= index %>"
+                data-modal-toggle="product-update-modal-<%= index %>"
+                class="font-medium text-blue-600 dark:text-blue-600 hover:underline mt-3 md:mt-0 md:ms-3">
+            Sửa
+        </button>
+    </td>
+</tr>
