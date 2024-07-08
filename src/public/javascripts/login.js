@@ -23,7 +23,7 @@ form.addEventListener('submit', async (e) => {
         }
 
         if(response.data.member){
-            location.assign('/home')
+            location.assign('/')
         }
     } catch (error) {
         console.log('err:',error);

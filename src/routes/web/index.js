@@ -10,7 +10,7 @@ const router = express.Router();
 const storage = multer.memoryStorage();
 const upload = multer({storage: storage});
 
-router.get('/home', homeController.getHomePage);
+router.get('/', homeController.getHomePage);
 
 router.get('/category', categoryController.getCategoryPage);
 

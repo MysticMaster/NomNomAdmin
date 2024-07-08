@@ -6,16 +6,13 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import configViewEngine from "./configs/viewEngine.js";
 import authMiddleware from "./middlewares/authMiddleware.js";
-
-dotenv.config();
-
-import indexRouter from './routes/web/index.js'
-
-import CategoryApiRoute from "./routes/api/categoryApiRoute.js";
+import authController from './controllers/authController.js';
+import index from './routes/web/index.js'
+import api from "./routes/api/api.js";
 import staticFile from "./configs/staticFile.js";
-import MemberApiRoute from "./routes/api/memberApiRoute.js";
 
 const app = express();
+dotenv.config();
 
 configViewEngine(app);
 staticFile(app);
@@ -30,23 +27,18 @@ const connect = async () => {
 }
 connect();
 
-
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
 
-import authController from './controllers/authController.js';
+app.use('/api', api);
 
-app.get('*',authMiddleware.checkUser);
 app.get('/login', authController.getLoginPage);
 app.post('/login', authController.postLogin);
 app.get('/logout', authController.getLogout);
+app.use('/', authMiddleware.requireAuthentication, index);
 
-app.use('/',authMiddleware.requireAuthentication, indexRouter);
-
-app.use('/api', CategoryApiRoute);
-app.use('/api', MemberApiRoute);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

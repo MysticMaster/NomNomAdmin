@@ -7,6 +7,7 @@ import crypto from "crypto";
 import sharp from "sharp";
 import s3 from "../../configs/s3Config.js";
 import Member from "../../models/memberModel.js";
+import generateImageName from "../../servieces/generateImageName.js";
 
 dotenv.config();
 
@@ -57,7 +58,7 @@ router.post("/member", upload.single("image"), async (req, res) => {
                     .resize({height: 500, width: 500, fit: "cover"})
                     .toBuffer();
 
-                imageName = randomImageName();
+                imageName = generateImageName();
 
                 const params = {
                     Bucket: bucketName,
