@@ -4,8 +4,8 @@ import {getSignedUrl} from "@aws-sdk/s3-request-presigner";
 import s3 from "../configs/s3Config.js";
 import sharp from "sharp";
 import dotenv from "dotenv";
-import generateImageName from "../servieces/generateImageName.js";
-import generateRandomOTP from "../servieces/generateRandomOTP.js";
+import generateImageName from "../services/generateImageName.js";
+import generateRandomOTP from "../services/generateRandomOTP.js";
 import nodemailerApiController from "./nodemailerApiController.js";
 
 dotenv.config();

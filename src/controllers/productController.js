@@ -6,7 +6,7 @@ import sharp from "sharp";
 import dotenv from "dotenv";
 import Category from "../models/categoryModel.js";
 import Order from "../models/orderModel.js";
-import generateImageName from "../servieces/generateImageName.js";
+import generateImageName from "../services/generateImageName.js";
 
 dotenv.config();
 const bucketName = process.env.BUCKET_NAME;

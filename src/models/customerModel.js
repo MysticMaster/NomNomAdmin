@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import * as argon2 from "argon2";
-import generateRandomString from "../servieces/generateRandomString.js";
+import generateRandomString from "../services/generateRandomString.js";
 
 const customerSchema = new mongoose.Schema({
     firstName: {

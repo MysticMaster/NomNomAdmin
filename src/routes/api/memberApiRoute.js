@@ -7,7 +7,7 @@ import crypto from "crypto";
 import sharp from "sharp";
 import s3 from "../../configs/s3Config.js";
 import Member from "../../models/memberModel.js";
-import generateImageName from "../../servieces/generateImageName.js";
+import generateImageName from "../../services/generateImageName.js";
 
 dotenv.config();
 

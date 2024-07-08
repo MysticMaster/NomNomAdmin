@@ -5,7 +5,7 @@ import s3 from "../configs/s3Config.js";
 import sharp from "sharp";
 import dotenv from "dotenv";
 import Product from "../models/productModel.js";
-import generateImageName from "../servieces/generateImageName.js";
+import generateImageName from "../services/generateImageName.js";
 
 dotenv.config();
 const bucketName = process.env.BUCKET_NAME;
