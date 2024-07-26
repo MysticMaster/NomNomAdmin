@@ -55,7 +55,7 @@ const getProductPage = async (req, res) => {
                 };
 
                 const command = new GetObjectCommand(getObjectParams);
-                product.imageUrl = await getSignedUrl(s3, command, {expiresIn: 60});
+                product.imageUrl = await getSignedUrl(s3, command, {expiresIn: 360});
             }
         }
 

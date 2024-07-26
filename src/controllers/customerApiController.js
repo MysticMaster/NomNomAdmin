@@ -95,7 +95,7 @@ const putUpdateFullName = async (req, res) => {
             {
                 firstName: firstName,
                 lastName: lastName
-            },{new: true});
+            }, {new: true});
 
         if (!customer) {
             return res.json({status: 404, data: null, message: 'Người dùng không tồn tại'});
@@ -117,9 +117,8 @@ const putUpdatePassword = async (req, res) => {
 
         const customer = await Customer.findOneAndUpdate(
             {_id: req.params.id},
-            {
-                password: password
-            });
+            {password: password},
+            {new: true});
 
         if (!customer) {
             return res.json({status: 404, data: null, message: 'Người dùng không tồn tại'});
@@ -178,8 +177,7 @@ const putUpdateAvatar = async (req, res) => {
         if (!customer) {
             return res.json({status: 404, data: null, message: 'Người dùng không tồn tại'});
         }
-
-
+        
         res.json({status: 200, data: null, message: 'Cập nhật thông tin thành công'});
     } catch (error) {
         console.log(error)
@@ -193,9 +191,8 @@ const putUpdatePhone = async (req, res) => {
 
         const customer = await Customer.findOneAndUpdate(
             {_id: req.params.id},
-            {
-                phoneNumber: phoneNumber
-            });
+            {phoneNumber: phoneNumber},
+            {new: true});
 
         if (!customer) {
             return res.json({status: 404, data: null, message: 'Người dùng không tồn tại'});
@@ -209,14 +206,15 @@ const putUpdatePhone = async (req, res) => {
 
 const putUpdateLocation = async (req, res) => {
     try {
-        const {latitude,longitude} = req.body;
+        const {latitude, longitude} = req.body;
 
         const customer = await Customer.findOneAndUpdate(
             {_id: req.params.id},
             {
                 latitude: latitude,
-                longitude:longitude
-            });
+                longitude: longitude
+            },
+            {new: true});
 
         if (!customer) {
             return res.json({status: 404, data: null, message: 'Người dùng không tồn tại'});
@@ -284,13 +282,13 @@ const getCustomer = async (req, res) => {
             };
 
             const command = new GetObjectCommand(getObjectParams);
-            customer.imageUrl = await getSignedUrl(s3, command, {expiresIn: 60});
+            customer.imageUrl = await getSignedUrl(s3, command, {expiresIn: 7200});
         }
 
-        res.json({status: 200, data: customer, message: 'Lấy tài khoản thành công'});
+        res.json({status: 200, data: customer, message: 'Thành công'});
 
     } catch (error) {
-        res.json({status: 500, data: null, message: error.message});
+        res.json({status: 500, data: null, message: 'Sự cố máy chủ'});
     }
 }
 

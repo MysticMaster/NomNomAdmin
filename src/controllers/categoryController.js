@@ -31,7 +31,7 @@ const getCategoryPage = async (req, res) => {
                 };
 
                 const command = new GetObjectCommand(getObjectParams);
-                category.imageUrl = await getSignedUrl(s3, command, {expiresIn: 60});
+                category.imageUrl = await getSignedUrl(s3, command, {expiresIn: 360});
             }
         }
 

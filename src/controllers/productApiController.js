@@ -19,17 +19,46 @@ const getProducts = async (req, res) => {
                 };
 
                 const command = new GetObjectCommand(getObjectParams);
-                product.imageUrl = await getSignedUrl(s3, command, {expiresIn: 60});
+                product.imageUrl = await getSignedUrl(s3, command, {expiresIn: 7200});
             }
         }
 
         res.json({status: 200, data: products, message: 'Lấy danh sách sản phẩm thành công'});
 
     } catch (error) {
-        res.json({status: 500, data: null, message: error.message});
+        res.json({status: 500, data: null, message: 'Sự cố máy chủ'});
+    }
+}
+
+const searchProducts = async (req,res) =>{
+    try {
+        const {keyword} = req.body;
+
+        const products = await Product.find({
+            name: { $regex: keyword, $options: "i" },
+            status: true
+        })
+
+        for (const product of products) {
+            if (product.imageName) {
+                const getObjectParams = {
+                    Bucket: bucketName,
+                    Key: product.imageName,
+                };
+
+                const command = new GetObjectCommand(getObjectParams);
+                product.imageUrl = await getSignedUrl(s3, command, {expiresIn: 7200});
+            }
+        }
+
+        res.json({status: 200, data: products, message: 'Lấy danh sách sản phẩm thành công'});
+
+    } catch (error) {
+        res.json({status: 500, data: null, message: 'Sự cố máy chủ'});
     }
 }
 
 export default {
-    getProducts
+    getProducts,
+    searchProducts
 }

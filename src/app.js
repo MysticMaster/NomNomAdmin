@@ -32,7 +32,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
 
-app.use('/api', api);
+app.use('/v1', api);
 
 app.get('/login', authController.getLoginPage);
 app.post('/login', authController.postLogin);

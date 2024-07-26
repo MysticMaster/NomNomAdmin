@@ -18,11 +18,11 @@ const customerSchema = new mongoose.Schema({
     },
     phoneNumber: String,
     latitude: {
-        type: String,
+        type: Number,
         required: false,
     },
     longitude: {
-        type: String,
+        type: Number,
         required: false,
     },
     username: {

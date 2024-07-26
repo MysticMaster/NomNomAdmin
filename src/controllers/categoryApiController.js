@@ -19,14 +19,14 @@ const getCategories = async (req, res) => {
                 };
 
                 const command = new GetObjectCommand(getObjectParams);
-                category.imageUrl = await getSignedUrl(s3, command, {expiresIn: 60});
+                category.imageUrl = await getSignedUrl(s3, command, {expiresIn: 7200});
             }
         }
 
         res.json({status: 200, data: categories, message: 'Lấy danh sách danh mục thành công'});
 
     } catch (error) {
-        res.json({status: 500, data: null, message: error.message});
+        res.json({status: 500, data: null, message: 'Sự cố máy chủ'});
     }
 }
 

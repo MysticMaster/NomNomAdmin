@@ -14,7 +14,7 @@ router.get('/', homeController.getHomePage);
 
 router.get('/category', categoryController.getCategoryPage);
 
-router.post('/create-category', upload.single("image"), categoryController.postCreateCategory);
+router.post('/create-category',  upload.single("image"),categoryController.postCreateCategory);
 
 router.post('/delete-category/:id', categoryController.deleteCategory);
 

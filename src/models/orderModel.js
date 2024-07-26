@@ -1,9 +1,37 @@
 import mongoose from "mongoose";
 
+const orderItemSchema = new mongoose.Schema({
+    id:{
+        type: String,
+        required: true
+    },
+    idProduct: {
+      type: String,
+      required: true
+    },
+    idOrder: {
+      type: String,
+      required: true
+    },
+    note: String,
+    price: {
+      type: Number,
+      required: true
+    },
+    quantity: {
+      type: Number,
+      required: true
+    },
+  });
+
 const orderSchema = new mongoose.Schema({
     idCustomer: {
         type: String,
         required: true,
+    },
+    idOrder:{
+        type: String,
+        require: true
     },
     shippingAddress: {
         type: String,
@@ -17,17 +45,24 @@ const orderSchema = new mongoose.Schema({
         type: Boolean,
         required: true,
     },
-    orderItems: [{
-        idProduct: String,
-        price: Number,
-        quantity: Number
-    }],
-    discount: Number,
+    discount: {
+        type: Number,
+        required: false,
+        default: 0
+    },
     totalPrice: {
         type: Number,
-        required: true,
+        required: true
+    },
+    totalQuantity:{
+        type: Number,
+        required: true
     },
     note: String,
+    orderItem:{
+        type: [orderItemSchema],
+        required: true
+    },
     orderPlacedAt: {
         type: Date,
         default: Date.now
@@ -35,7 +70,9 @@ const orderSchema = new mongoose.Schema({
     orderConfirmedAt: Date,
     orderShippedAt: Date,
     orderDeliveredAt: Date,
+    orderReceivedAt: Date,
     orderCancelledAt: Date,
+    orderRefuseAt:Date,
     orderStatus: {
         type: Number,
         default: 0,
