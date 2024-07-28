@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="bg-gray-200 dark:bg-gray-900">
+    <div class="p-4 sm:ml-1">
+      <div class="w-full flex flex-col md:flex-row justify-between">
+        <h2
+          class="text-base md:text-xl font-semibold text-gray-900 dark:text-white"
+        >
+          Mã đơn: <%= order.idOrder %>
+        </h2>
+
+        <h2
+          class="text-base md:text-xl font-semibold text-gray-900 dark:text-white"
+        >
+          Trạng thái: <% switch (order.orderStatus) { case 0: %> Chờ xác nhận <%
+          break; case 1: %> Chờ chuẩn bị <% break; case 2: %> Đang giao <%
+          break; case 3: %> Chờ nhận hàng <% break; case 4: %> Đã giao <% break;
+          case 5: %> Khách hủy <% break; case 6: %> Không hợp lệ <% break;
+          default:%> Tất cả <% break; } %>
+        </h2>
+      </div>
+
+      <div class="w-full grid grid-cols-1 md:grid-cols-4 gap-4 mt-3">
+        <div class="bg-white p-4 shadow rounded">
+          Địa chỉ giao hàng: <br />
+          <%= order.shippingAddress %>
+        </div>
+
+        <div class="bg-white p-4 shadow rounded">
+          Số điện thoại nhận hàng: <br />
+          <%= order.deliveryPhoneNumber %> <br />
+          Hình thức thanh toán: <br />
+          <% if(order.billingStatus){%>Đã thanh toán<%}else{%>Tiền mặt<%} %>
+        </div>
+
+        <div class="bg-white p-4 shadow rounded">
+          Tổng số món: <br />
+          <%= order.totalQuantity %> món <br />
+          Tổng thanh toán: <br />
+          <%= order.totalPrice.toLocaleString('vi-VN', {style: 'currency',
+          currency: 'VND'}) %>
+        </div>
+
+        <div class="bg-white p-4 shadow rounded">
+          Khuyến mãi: <br />
+          <%= order.discount.toLocaleString('vi-VN', {style: 'currency',
+          currency: 'VND'}) %> <br />
+          Ghi chú: <br />
+          <% if(order.note){%>order.note<%}else{%>Trống<%} %>
+        </div>
+      </div>
+
+      <div class="order-items grid gap-4 mt-3">
+        <% if (orderItems && orderItems.length > 0) { %> <%
+        orderItems.forEach(item => { %>
+        <div
+          class="order-item bg-white p-4 shadow rounded flex flex-col md:flex-row"
+        >
+          <div class="md:w-1/4 flex justify-center items-center mb-4 md:mb-0">
+            <img
+              class="w-40 h-40 object-cover rounded"
+              src="<%= item.imageUrl %>"
+              alt="<%= item.productName %>"
+            />
+          </div>
+          <div
+            class="md:w-3/4 flex flex-col md:flex-row md:flex-wrap md:items-center"
+          >
+            <div class="md:w-1/2 p-2">
+              <p class="font-semibold">Tên sản phẩm: <%= item.productName %></p>
+            </div>
+            <div class="md:w-1/2 p-2">
+              <p class="font-semibold">Danh mục: <%= item.categoryName %></p>
+            </div>
+            <div class="md:w-1/2 p-2">
+              <p class="font-semibold">Số lượng: <%= item.quantity %></p>
+            </div>
+            <div class="md:w-1/2 p-2">
+              <p class="font-semibold">
+                Giá: <%= item.price.toLocaleString('vi-VN', {style: 'currency',
+                currency: 'VND'}) %>
+              </p>
+            </div>
+            <div class="md:w-1/2 p-2">
+              <p class="font-semibold">
+                Tổng: <%= (item.price * item.quantity).toLocaleString('vi-VN',
+                {style: 'currency', currency: 'VND'}) %>
+              </p>
+            </div>
+            <div class="md:w-1/2 p-2">
+              <p class="font-semibold">
+                Ghi chú: <% if(item.note){%><%= item.note%><%}else{%>Trống<%} %>
+              </p>
+            </div>
+          </div>
+        </div>
+        <% }); %> <% } else { %>
+        <p>Không có sản phẩm nào trong đơn hàng này.</p>
+        <% } %>
+      </div>
+
+      <div class="w-full grid grid-cols-1 md:grid-cols-4 gap-4 mt-3">
+        <div class="bg-white p-4 shadow rounded">
+          Thời gian đặt hàng: <br />
+          <%= formatDateTime(order.orderPlacedAt) %>
+        </div>
+
+        <% if(order.orderConfirmedAt){%>
+        <div class="bg-white p-4 shadow rounded">
+          Thời gian xác nhận: <br />
+          <%= formatDateTime(order.orderConfirmedAt) %>
+        </div>
+        <%} %> <% if(order.orderShippedAt){%>
+        <div class="bg-white p-4 shadow rounded">
+          Thời gian giao vận chuyển: <br />
+          <%= formatDateTime(order.orderShippedAt) %>
+        </div>
+        <%} %> <% if(order.orderDeliveredAt){%>
+        <div class="bg-white p-4 shadow rounded">
+          Thời gian giao: <br />
+          <%= formatDateTime(order.orderDeliveredAt) %>
+        </div>
+        <%} %> <% if(order.orderReceivedAt){%>
+        <div class="bg-white p-4 shadow rounded">
+          Thời gian nhận: <br />
+          <%= formatDateTime(order.orderReceivedAt) %>
+        </div>
+        <%} %> <% if(order.orderCancelledAt){%>
+        <div class="bg-white p-4 shadow rounded">
+          Thời gian hủy: <br />
+          <%= formatDateTime(order.orderCancelledAt) %>
+        </div>
+        <%} %> <% if(order.orderRefusedAt){%>
+        <div class="bg-white p-4 shadow rounded">
+          Thời gian từ chối: <br />
+          <%= formatDateTime(order.orderRefusedAt) %>
+        </div>
+        <%} %>
+      </div>
+
+      <div class="w-full flex flex-col md:flex-row justify-center mt-3">
+        <% if(order.orderStatus === 0 || order.orderStatus === 1 ||
+        order.orderStatus === 2){%>
+        <a
+          href=" <% switch (order.orderStatus) { case 0: %> /order/accept/<%= order.id%> <% break; case
+            1: %>/order/ship/<%= order.id%> <% break; case 2: %> /order/delivere/<%= order.id%> <% break;}
+            %>"
+        >
+          <button
+            type="button"
+            class="mt-3 text-white bg-blue-700 w-full md:w-auto hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 md:mx-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+          >
+            <% switch (order.orderStatus) { case 0: %> Xác nhận <% break; case
+            1: %> Bắt đầu giao <% break; case 2: %> Đã đến <% break;} %>
+          </button>
+        </a>
+        <%} %> <% if(order.orderStatus === 0){%>
+        <a href="/order/refuse/<%= order.id %>">
+          <button
+            type="button"
+            class="mt-3 focus:outline-none w-full md:w-auto text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 md:mx-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
+          >
+            Từ chối
+          </button>
+        </a>
+        <%} %>
+
+        <a href="/order">
+          <button
+            type="button"
+            class="mt-3 py-2.5 px-5 w-full md:w-auto md:mx-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+          >
+            Quay lại
+          </button>
+        </a>
+      </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+  </body>
+</html>

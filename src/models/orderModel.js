@@ -72,7 +72,7 @@ const orderSchema = new mongoose.Schema({
     orderDeliveredAt: Date,
     orderReceivedAt: Date,
     orderCancelledAt: Date,
-    orderRefuseAt:Date,
+    orderRefusedAt:Date,
     orderStatus: {
         type: Number,
         default: 0,

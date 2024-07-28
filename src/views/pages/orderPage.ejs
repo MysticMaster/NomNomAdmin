@@ -1,0 +1,203 @@
+<div class="p-4 sm:ml-64">
+  <div class="w-full flex justify-between items-center">
+    <h2 class="text-lg md:text-2xl font-semibold text-gray-900 dark:text-white">
+      Quản lý đơn hàng
+    </h2>
+
+    <a href="/order">
+      <span
+        id="notification"
+        class="inline-flex items-center justify-center w-4 h-4 p-4 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300"
+        >0</span
+      >
+    </a>
+  </div>
+
+  <div class="w-full flex justify-end items-center">
+    <form class="max-w-md my-4" action="" method="GET">
+      <div class="flex">
+        <button
+          id="dropdown-button-2"
+          data-dropdown-toggle="dropdown-filter"
+          class="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-xs md:text-sm font-medium text-center text-gray-500 bg-gray-100 border border-gray-300 rounded-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600"
+          type="button"
+        >
+          <% switch (orderStatus) { case 0: %> Chờ xác nhận <% break; case 1: %>
+          Chờ chuẩn bị <% break; case 2: %> Đang giao <% break; case 3: %>Chờ
+          nhận hàng <% break; case 4: %> Đã giao <% break; case 5: %> Khách hủy
+          <% break; case 6: %> Không hợp lệ <% break; default:%> Tất cả <%
+          break; } %>
+          <svg
+            class="w-2.5 h-2.5 ms-2.5"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 10 6"
+          >
+            <path
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="m1 1 4 4 4-4"
+            />
+          </svg>
+        </button>
+        <div
+          id="dropdown-filter"
+          class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-full md:w-60 dark:bg-gray-700"
+        >
+          <ul
+            class="py-2 text-sm text-gray-700 dark:text-gray-200"
+            aria-labelledby="dropdown-button-2"
+          >
+            <li>
+              <a
+                href="/order"
+                class="inline-flex w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-600 dark:hover:text-white"
+                role="menuitem"
+              >
+                Tất cả
+              </a>
+            </li>
+
+            <li>
+              <a
+                href="/order?status=0"
+                class="inline-flex w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-600 dark:hover:text-white"
+                role="menuitem"
+              >
+                <div class="flex flex-row items-center">Chờ xác nhận</div>
+              </a>
+            </li>
+            <li>
+              <a
+                href="/order?status=1"
+                class="inline-flex w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-600 dark:hover:text-white"
+                role="menuitem"
+              >
+                <div class="flex flex-row items-center">Chờ chuẩn bị</div>
+              </a>
+            </li>
+            <li>
+              <a
+                href="/order?status=2"
+                class="inline-flex w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-600 dark:hover:text-white"
+                role="menuitem"
+              >
+                <div class="flex flex-row items-center">Đang giao</div>
+              </a>
+            </li>
+            <li>
+              <a
+                href="/order?status=3"
+                class="inline-flex w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-600 dark:hover:text-white"
+                role="menuitem"
+              >
+                <div class="flex flex-row items-center">Chờ nhận hàng</div>
+              </a>
+            </li>
+            <li>
+              <a
+                href="/order?status=4"
+                class="inline-flex w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-600 dark:hover:text-white"
+                role="menuitem"
+              >
+                <div class="flex flex-row items-center">Đã giao</div>
+              </a>
+            </li>
+            <li>
+              <a
+                href="/order?status=5"
+                class="inline-flex w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-600 dark:hover:text-white"
+                role="menuitem"
+              >
+                <div class="flex flex-row items-center">Khách hủy</div>
+              </a>
+            </li>
+            <li>
+              <a
+                href="/order?status=6"
+                class="inline-flex w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-600 dark:hover:text-white"
+                role="menuitem"
+              >
+                <div class="flex flex-row items-center">Không hợp lệ</div>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="relative overflow-x-auto dark:bg-gray-800 shadow-md rounded-lg">
+    <table
+      class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
+    >
+      <thead
+        class="text-xs md:text-md text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-white"
+      >
+        <tr class="w-full grid grid-cols-5 gap-3 px-2 py-2 md:px-5">
+          <th scope="col" class="py-3">Thời gian đặt</th>
+          <th scope="col" class="py-3">Số lượng</th>
+          <th scope="col" class="py-3">Tổng tiền</th>
+          <th scope="col" class="py-3">Trạng thái</th>
+          <th scope="col" class="py-3">Thao tác</th>
+        </tr>
+      </thead>
+      <tbody id="order-table-body">
+        <% if(locals.orders.length > 0){ %> <% orders.forEach( (item, index) =>
+        { %> <%- include('../components/items/orderRow', { item: item, index:
+        index }) %> <% }); %> <% }else { %>
+        <tr
+          class="w-full justify-center items-center bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+        >
+          <td
+            class="text-base w-full text-center p-3 italic font-medium text-gray-900 dark:text-white"
+          >
+            Không có đơn hàng nào
+          </td>
+        </tr>
+        <% } %>
+      </tbody>
+    </table>
+    <% if(orders.length > 0){ %> <%- include('../components/orderPagination') %>
+    <% } %>
+  </div>
+</div>
+
+<input type="hidden" id="user-data" value="<%= locals.user %>" />
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const user = document.getElementById("user-data").value;
+    const ws = new WebSocket("ws://192.168.1.218:3001");
+    let changeCount = 0;
+
+    ws.onopen = () => {
+      ws.send(`USER:${user}`);
+    };
+
+    ws.onmessage = (event) => {
+      const message = event.data;
+
+      if (message === "1") {
+        changeCount++;
+        updateOrderNotification(changeCount);
+      }
+    };
+
+    ws.onclose = () => {
+      console.log("WebSocket connection closed");
+    };
+
+    ws.onerror = (error) => {
+      console.log("WebSocket error: ", error);
+    };
+
+    function updateOrderNotification(count) {
+      const notification = document.getElementById("notification");
+      notification.innerHTML = count;
+    }
+  });
+</script>

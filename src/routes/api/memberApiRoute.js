@@ -90,4 +90,4 @@ router.post("/member", upload.single("image"), async (req, res) => {
     }
 });
 
-export default router;
+// export default router;

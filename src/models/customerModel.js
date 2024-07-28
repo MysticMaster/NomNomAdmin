@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import * as argon2 from "argon2";
 import generateRandomString from "../services/generateRandomString.js";
 
 const customerSchema = new mongoose.Schema({
@@ -62,32 +61,5 @@ customerSchema.methods.validateCustomer = async function() {
         throw new Error('password');
     }
 };
-
-customerSchema.pre('save', async function (next) {
-    try {
-        await this.validateCustomer();
-        this.password = await argon2.hash(this.password);
-        next();
-    } catch (error) {
-        next(error);
-    }
-});
-
-customerSchema.statics.login = async function (username, password) {
-    const customer = await this.findOne({username: username});
-    if (!customer) {
-        throw Error('username');
-    }
-
-    const isPasswordValid = await argon2.verify(customer.password,password);
-    if(!isPasswordValid){
-        throw Error('password');
-    }
-
-    if(!customer.status){
-        throw Error('status');
-    }
-    return customer;
-}
 
 export default mongoose.model('Customer', customerSchema);

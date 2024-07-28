@@ -48,7 +48,7 @@ const getProductPage = async (req, res) => {
         const categories = await Category.find().sort({createAt: +1});
 
         for (const product of products) {
-            if ((await product).imageName) {
+            if (product.imageName) {
                 const getObjectParams = {
                     Bucket: bucketName,
                     Key: product.imageName,
